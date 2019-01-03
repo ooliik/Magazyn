@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="Inventory.ReceiveLineAddPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Inventory"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="ButtonBackground" Color="Transparent"/>
+                    <SolidColorBrush x:Key="ButtonForeground" Color="MediumSlateBlue"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="MediumSlateBlue"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+            <AppBarButton x:Name="BackAddButton" HorizontalAlignment="Left" Icon="Back" Label="" VerticalAlignment="Top"   
+                             Width="45" Height="44" Click="BackAddButton_Click"/>
+            <TextBlock Text="Nowa pozycja" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+        </StackPanel >
+        <StackPanel Grid.Column="0" Grid.Row="1">
+
+            <TextBlock x:Name="DocumentIDTb" Margin="20,0,0,0"></TextBlock>
+            <ComboBox x:Name="ItemIDCb" ItemsSource="{Binding}" SelectedValuePath="ItemID" DisplayMemberPath="ItemID" Margin="20,10,20,0" Header="Produkt:" SelectionChanged="ItemIDCbSelectionChanged"/>
+            <ComboBox x:Name="StockKeepUnitCb" ItemsSource="{Binding}" SelectedValuePath="Code" DisplayMemberPath="Code" Margin="20,10,20,0" Header="Jednostka:" Tapped="StockKeepUnitCbTapped"/>
+            <ComboBox x:Name="WarehouseNameCb" ItemsSource="{Binding}" SelectedValuePath="WarehouseName" DisplayMemberPath="WarehouseName" Margin="20,10,20,0" Header="Nr magazynu:" SelectionChanged="WarehouseNameCbSelectionChanged"/>
+            <ComboBox x:Name="WarehousePlaceCb" ItemsSource="{Binding}" SelectedValuePath="WarehousePlaceName" DisplayMemberPath="WarehousePlaceName" Margin="20,10,20,0" Header="Miejsce w mag:" Tapped="WarehousePlaceCbTapped"/>
+
+
+
+            <Button x:Name="SaveReceiveLineButton" Content="Dodaj" HorizontalAlignment="Left" Height="50" Margin="20,20,0,0" Click="SaveReceiveLineButton_Click" Width="90"/>
+
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+
+            <TextBox x:Name="QuantityTb" Margin="20,0,20,0" Header="Ilość:" PlaceholderText="np. 2.0" InputScope="Number"></TextBox>
+
+        </StackPanel>
+    </Grid>
+</Page>

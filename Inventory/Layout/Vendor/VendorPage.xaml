@@ -1,0 +1,44 @@
+﻿<Page
+    x:Class="Inventory.VendorPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Inventory.Vendor"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="ButtonBackground" Color="Transparent"/>
+                    <SolidColorBrush x:Key="ButtonForeground" Color="MediumSlateBlue"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="MediumSlateBlue"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBlock Text ="Sprzedawca" Margin="20,20,115,0" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+
+            <TextBlock  Margin="20,00,20,0" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+            <StackPanel  Margin="20,00,20,0">
+                <Button x:Name="DeleteEditButton" Content="Usuń" 
+                        Width="62" Height="50" Margin="0,-50,20,0" HorizontalAlignment="Right" Click="DeleteEditButton_Click"/>
+            </StackPanel>
+
+
+            <TextBox x:Name="VendorIDTb" Margin="20,10,20,0" Header="ID:"/>
+            <TextBox x:Name="NameTb" Margin="20,10,20,0" Header="Nazwa:"/>
+            <TextBox x:Name="AddressTb" Margin="20,10,20,0" Header="Adres:"/>
+            <TextBox x:Name="CityTb" Margin="20,10,20,0" Header="Miasto:"/>
+            <TextBox x:Name="CountryTb" Margin="20,10,20,0" Header="Państwo:"/>
+
+
+            <Button x:Name="SaveEditButton" Content="Zapisz" Height="53" Margin="0,10,20,0" HorizontalAlignment="Right" Click="SaveEditButton_Click" Width="103"/>
+        </StackPanel>
+    </Grid>
+</Page>

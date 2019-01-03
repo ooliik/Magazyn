@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="Inventory.ItemPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Inventory"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    NavigationCacheMode="Disabled">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="ButtonBackground" Color="Transparent"/>
+                    <SolidColorBrush x:Key="ButtonForeground" Color="MediumSlateBlue"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="MediumSlateBlue"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBlock Text ="Produkt" Margin="20,20,162,0" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+            <Button x:Name="DeleteEditButton" Content="Usuń" 
+                        Width="62" Height="50" Margin="0,-50,20,0" HorizontalAlignment="Right" Click="DeleteEditButton_Click"/>
+            <TextBlock x:Name="ItemIDTb" Margin="20,00,20,0" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+
+
+            <TextBox x:Name="NameTb" Margin="20,10,20,0" Header="Nazwa:"/>
+            <TextBox x:Name="DescriptionTb" Margin="20,10,20,0" Header="Opis:"/>
+            <ComboBox x:Name="CategorySelectCb" ItemsSource="{Binding}" SelectedValuePath="CategoryID" DisplayMemberPath="CategoryID" Margin="20,10,20,0" Header="Kategoria:"/>
+
+            <Button x:Name="SKUEditButton" Content="Jednostki miary" 
+                        Width="130" Height="50" Margin="20,30,0,0" HorizontalAlignment="Left" Click="SKUEditButton_Click"/>
+            <Button x:Name="SaveEditButton" Content="Zapisz" Height="53" Margin="0,-50,20,0" HorizontalAlignment="Right" Click="SaveEditButton_Click" Width="103"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -1,0 +1,62 @@
+﻿<Page
+    x:Class="Inventory.WarehousePlacePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Inventory"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="ButtonBackground" Color="Transparent"/>
+                    <SolidColorBrush x:Key="ButtonForeground" Color="MediumSlateBlue"/>
+                    <SolidColorBrush x:Key="ButtonBorderBrush" Color="MediumSlateBlue"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Name="Details" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="250"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <AppBarButton x:Name="BackWarehousePlacesButton" HorizontalAlignment="Left" Icon="Back" Label="" VerticalAlignment="Top"   
+                             Width="45" Height="44" Click="BackWarehousePlacesButton_Clik"/>
+            <TextBlock Text="Miejsca mag." Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+
+            <TextBox x:Name="WarehouseNameTb" Margin="20,00,180,0" Header="Nazwa:" PlaceholderText="np. P001"></TextBox>
+            <TextBox x:Name="WarehousePlaceTb" Margin="20,00,180,0" Header="Miejsce magazynowe:" PlaceholderText="np. P001"></TextBox>
+
+            <Button x:Name="WarehouseAddButton" Content="Dodaj" 
+                        Width="100" Height="50" Margin="20,-40,40,0" HorizontalAlignment="Right" Click="AddWPToListButton_Click"/>
+
+
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <ScrollViewer>
+                <StackPanel >
+                    <ListView x:Name="WPList">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding WarehousePlaceName}" FontSize="18" Foreground="MediumSlateBlue" Margin="0,0,0,0"></TextBlock>
+                                        <StackPanel >
+                                            <Button Name="DeleteWP" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Click="DeleteWP_Click"></Button>
+
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+
+</Page>

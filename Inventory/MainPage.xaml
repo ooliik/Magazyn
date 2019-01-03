@@ -1,0 +1,734 @@
+﻿<Page
+    
+    x:Class="Inventory.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Inventory.Models"
+
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    NavigationCacheMode="Enabled"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <local:StringFormatConverter x:Key="StringFormatConverter" />
+    </Page.Resources>
+
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay" Background="GhostWhite" IsPaneOpen="True" 
+               CompactPaneLength="45" OpenPaneLength="200">
+        <SplitView.Pane>
+
+            <StackPanel Background="SlateBlue">
+                <Button x:Name="MenuButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent" Click="MenuButton_Click"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ItemsButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE71D;"
+                    Width="45" Height="45" Background="Transparent" Click="ItemsButton_Click"/>
+                    <TextBlock Text="Produkty" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ReleaseListButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE803;"
+                        Width="45" Height="45" Background="Transparent" Click="ReleaseListButton_Click"/>
+                    <TextBlock Text="Wydania" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ReceiveListButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE802;"
+                        Width="45" Height="45" Background="Transparent" Click="ReceiveListButton_Click"/>
+                    <TextBlock Text="Przyjęcia" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="UnitsButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE8A9;"
+                        Width="45" Height="45" Background="Transparent" Click="UnitsButton_Click"/>
+                    <TextBlock Text="Jednostki" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="CategoriesButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE8C4;"
+                        Width="45" Height="45" Background="Transparent" Click="CategoriesButton_Click"/>
+                    <TextBlock Text="Kategorie" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="WarehouseButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE80F;"
+                        Width="45" Height="45" Background="Transparent" Click="WarehouseButton_Click"/>
+                    <TextBlock Text="Magazyny" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="CustomerButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE716;"
+                        Width="45" Height="45" Background="Transparent" Click="CustomerButton_Click"/>
+                    <TextBlock Text="Klienci" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="VendorButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE77B;"
+                        Width="45" Height="45" Background="Transparent" Click="VendorButton_Click"/>
+                    <TextBlock Text="Sprzedawcy" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="SearchButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE721;"
+                        Width="45" Height="45" Background="Transparent" Click="SearchButton_Click"/>
+                    <TextBlock Text="Wyszukaj" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="InventButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xEE92;"
+                        Width="45" Height="45" Background="Transparent" Click="InventButton_Click"/>
+                    <TextBlock Text="Inwentaryzacja" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="HistoryButton" Foreground="FloralWhite" FontFamily="Segoe MDL2 Assets" Content="&#xE773;"
+                        Width="45" Height="45" Background="Transparent" Click="HistoryButton_Click"/>
+                    <TextBlock Text="Historia" Foreground="FloralWhite" FontSize="14" VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <StackPanel>
+                <Grid x:Name="ItemListGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Pivot x:Name="rootPivot" Title="Produkty">
+                        <PivotItem Header="Lista produktów">
+                            <StackPanel x:Name="StackItemList" Grid.Row="1">
+                                <TextBlock x:Name="ItemListTb"  FontSize="40"/>
+                                <StackPanel>
+                                    <Button x:Name="AddItemButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" Click="AddItemButton_Click"/>
+                                </StackPanel>
+
+                                <ScrollViewer  HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible"
+                                            Height="360" Width="auto">
+                                    <StackPanel Grid.Row="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="120"/>
+                                                <ColumnDefinition Width="170"/>
+                                                <ColumnDefinition Width="250"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Text="Id produktu"></TextBlock>
+                                            <TextBlock Grid.Column="1" Text="Nazwa"></TextBlock>
+                                            <TextBlock Grid.Column="2" Text="Opis"></TextBlock>
+                                        </Grid>
+                                        <ListView x:Name="MyList" Tapped="MyList_Tapped" Margin="-10,20,0,0">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="120"/>
+                                                            <ColumnDefinition Width="170"/>
+                                                            <ColumnDefinition Width="250"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock Grid.Column="0" Text="{Binding ItemID}" FontSize="18" Foreground="MediumSlateBlue"></TextBlock>
+                                                        <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                                                        <TextBlock Grid.Column="2" Text="{Binding Description}"></TextBlock>
+
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                        </PivotItem>
+                        <PivotItem Header="Stan">
+                            <StackPanel x:Name="QuantityList" Grid.Row="1">
+                                <TextBlock x:Name="QuantityListTb"  FontSize="40"/>
+                                <ScrollViewer Height="300" Width="auto">
+                                    <StackPanel Grid.Row="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="250"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="Id produktu"></TextBlock>
+                                            <TextBlock Grid.Column="1" Text="Nr mag."></TextBlock>
+                                            <TextBlock Grid.Column="2" Text="Ilość sztuk"></TextBlock>
+                                        </Grid>
+                                        <ListView x:Name="MyList2" Margin="-10,20,0,0">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="100"/>
+                                                            <ColumnDefinition Width="80"/>
+                                                            <ColumnDefinition Width="90"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding ItemID}" Foreground="MediumSlateBlue"></TextBlock>
+                                                        <TextBlock Grid.Column="1" Text="{Binding WarehouseNumber}"></TextBlock>
+                                                        <TextBlock Grid.Column="2" Text="{Binding TotalQuantity}"></TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </StackPanel>
+
+                        </PivotItem>
+                        <PivotItem Header="Ostatnie zapisy">
+                            <StackPanel x:Name="Last10Listsp" Grid.Row="1">
+                                <TextBlock x:Name="Last10ListTb"  FontSize="40"/>
+                                <ScrollViewer Height="400" Width="auto" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+                                    <StackPanel Grid.Row="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="110"/>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="90"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="Id produktu"></TextBlock>
+                                            <TextBlock Grid.Column="1" Text="Nr dokum."></TextBlock>
+                                            <TextBlock Grid.Column="2" Text="Nr mag."></TextBlock>
+                                            <TextBlock Grid.Column="4" Text="Ilość sztuk"></TextBlock>
+                                        </Grid>
+                                        <ListView x:Name="Last10List" Margin="-10,0,0,0">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="100"/>
+                                                            <ColumnDefinition Width="110"/>
+                                                            <ColumnDefinition Width="80"/>
+                                                            <ColumnDefinition Width="90"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding ItemID}" Foreground="MediumSlateBlue"></TextBlock>
+                                                        <TextBlock Grid.Column="1" Text="{Binding DocumentNumber}"></TextBlock>
+                                                        <TextBlock Grid.Column="2" Text="{Binding WarehouseNumber}"></TextBlock>
+                                                        <TextBlock Grid.Column="4" Text="{Binding TotalQuantity}"></TextBlock>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </PivotItem>
+                    </Pivot>
+
+
+                </Grid>
+                <Grid x:Name="ReleaseGrid">
+
+                    <StackPanel>
+                        <StackPanel Height="40">
+                        </StackPanel>
+                        <TextBlock Text="Wydania magazynowe" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <StackPanel>
+                            <Button x:Name="AddReleaseHeaderButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Click="AddReleaseHeaderButton_Click"/>
+                        </StackPanel>
+                        <ScrollViewer Height="250" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+                            <StackPanel>
+                                <Grid Margin='10,0,0,0' Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Nr dokumentu"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="Opis"></TextBlock>
+                                    <TextBlock Grid.Column="2" Text="Data wydania"></TextBlock>
+                                    <TextBlock Grid.Column="3" Text="Nr klienta"></TextBlock>
+                                </Grid>
+
+                                <ListView x:Name="ReleaseHeaderList" Tapped="ReleaseHeaderList_Tapped" Margin="0,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="110"/>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Grid.Column="0" Text="{Binding DocumentID}" Foreground="MediumSlateBlue"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                                                <TextBlock Grid.Column="2" Text="{Binding ReleaseDate, 
+                                                     Converter={StaticResource StringFormatConverter}, 
+                                                     ConverterParameter=' {0: yyyy-MM-dd}'}" />
+                                                <TextBlock Grid.Column="3" Text="{Binding CustomerID}"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="ReceiveGrid">
+                    <StackPanel>
+                        <StackPanel Height="40">
+                        </StackPanel>
+                        <TextBlock Text="Przyjęcia magazynowe" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <StackPanel>
+                            <Button x:Name="AddReceiveHeaderButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Click="AddReceiveHeaderButton_Click"/>
+                        </StackPanel>
+                        <ScrollViewer Height="350" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+                            <StackPanel Grid.Row="1" Margin="10,0,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="110"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Nr dokumentu"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="Opis"></TextBlock>
+                                    <TextBlock Grid.Column="2" Text="Data wydania"></TextBlock>
+                                    <TextBlock Grid.Column="3" Text="Nr sprzedawcy"></TextBlock>
+                                </Grid>
+
+                                <ListView x:Name="ReceiveHeaderList" Tapped="ReceiveHeaderList_Tapped" Margin="-10,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="110"/>
+                                                    <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="110"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding DocumentID}" Foreground="MediumSlateBlue"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                                                <TextBlock Grid.Column="2" Text="{Binding ReceiveDate, 
+                                                     Converter={StaticResource StringFormatConverter}, 
+                                                     ConverterParameter=' {0: yyyy-MM-dd}'}" />
+                                                <TextBlock Grid.Column="3" Text="{Binding VendorID}"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="UnitsGrid">
+                    <StackPanel>
+                        <StackPanel Height="40">
+                        </StackPanel>
+                        <TextBlock Text="Tabela jednostek" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <StackPanel>
+                            <Button x:Name="AddUnitButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Click="AddUnitButton_Click"/>
+                        </StackPanel>
+                        <ScrollViewer Height="400" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+                            <StackPanel>
+                                <Grid Grid.Row="1" Margin="10,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="170"/>
+                                        <ColumnDefinition Width="150"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Kod"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="Opis"></TextBlock>
+                                    <TextBlock Grid.Column="2" Text="Ilość szt na jednostkę"></TextBlock>
+                                </Grid>
+
+                                <ListView x:Name="UnitsList" Tapped="UnitsList_Tapped" Margin="0,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="80"/>
+                                                    <ColumnDefinition Width="170"/>
+                                                    <ColumnDefinition Width="150"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Code}" Foreground="MediumSlateBlue"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                                                <TextBlock Grid.Column="2" Text="{Binding QuantityPerUnit}"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="CategoriesGrid">
+                    <StackPanel>
+                        <StackPanel Height="40">
+                        </StackPanel>
+                        <TextBlock Text="Tabela kategorii" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <StackPanel>
+                            <Button x:Name="AddCategoryButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Click="AddCategoryButton_Click"/>
+                        </StackPanel>
+                        <ScrollViewer Height="300" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+                            <StackPanel>
+                                <Grid Grid.Row="1" Margin="10,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="230"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Kategoria"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="Opis"></TextBlock>
+                                </Grid>
+
+                                <ListView x:Name="CategoriesList" Tapped="CategoriesList_Tapped">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="150"/>
+                                                    <ColumnDefinition Width="230"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding CategoryID}" Foreground="MediumSlateBlue"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="WarehousesGrid">
+                    <StackPanel>
+                        <StackPanel Height="40">
+                        </StackPanel>
+                        <TextBlock Text="Tabela magazynów" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <StackPanel>
+                            <Button x:Name="AddWarehouseButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Click="AddWarehouseButton_Click"/>
+                        </StackPanel>
+                        <ScrollViewer Height="350" Width="auto" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+                            <StackPanel Grid.Row="1" Margin="10,0,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="90"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Nazwa"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="Opis"></TextBlock>
+                                    <TextBlock Grid.Column="2" Text="Adres"></TextBlock>
+                                </Grid>
+
+                                <ListView x:Name="WarehousesList" Tapped="WarehousesList_Tapped" Margin="-10,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="130"/>
+                                                    <ColumnDefinition Width="250"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding WarehouseName}" Foreground="MediumSlateBlue"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                                                <TextBlock Grid.Column="2" Text="{Binding Address}"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="CustomersGrid">
+                    <StackPanel>
+                        <StackPanel Height="40">
+                        </StackPanel>
+                        <TextBlock Text="Klienci" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <StackPanel>
+                            <Button x:Name="AddCustomerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Click="AddCustomerButton_Click"/>
+                        </StackPanel>
+                        <ScrollViewer Height="350" Width="auto" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+                            <StackPanel Grid.Row="1" Margin="10,0,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="190"/>
+                                        <ColumnDefinition Width="160"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="90"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="ID"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="Nazwa"></TextBlock>
+                                    <TextBlock Grid.Column="2" Text="Adres"></TextBlock>
+                                    <TextBlock Grid.Column="3" Text="Miasto"></TextBlock>
+                                    <TextBlock Grid.Column="4" Text="Państwo"></TextBlock>
+                                </Grid>
+
+                                <ListView x:Name="CustomersList" Tapped="CustomersList_Tapped" Margin="-10,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="190"/>
+                                                    <ColumnDefinition Width="160"/>
+                                                    <ColumnDefinition Width="250"/>
+                                                    <ColumnDefinition Width="90"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding CustomerID}" Foreground="MediumSlateBlue"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                                                <TextBlock Grid.Column="2" Text="{Binding Address}"></TextBlock>
+                                                <TextBlock Grid.Column="3" Text="{Binding City}"></TextBlock>
+                                                <TextBlock Grid.Column="4" Text="{Binding Country}"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="VendorsGrid">
+                    <StackPanel>
+                        <StackPanel Height="40">
+                        </StackPanel>
+                        <TextBlock Text="Sprzedawcy" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <StackPanel>
+                            <Button x:Name="AddVendorButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Click="AddVendorButton_Click"/>
+                        </StackPanel>
+                        <ScrollViewer Height="390" Width="auto" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+                            <StackPanel Grid.Row="1" Margin="10,0,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="160"/>
+                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="90"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="ID"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="Nazwa"></TextBlock>
+                                    <TextBlock Grid.Column="2" Text="Adres"></TextBlock>
+                                    <TextBlock Grid.Column="3" Text="Miasto"></TextBlock>
+                                    <TextBlock Grid.Column="4" Text="Państwo"></TextBlock>
+                                </Grid>
+
+                                <ListView x:Name="VendorsList" Tapped="VendorsList_Tapped" Margin="-10,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="120"/>
+                                                    <ColumnDefinition Width="250"/>
+                                                    <ColumnDefinition Width="160"/>
+                                                    <ColumnDefinition Width="250"/>
+                                                    <ColumnDefinition Width="90"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding VendorID}" Foreground="MediumSlateBlue"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                                                <TextBlock Grid.Column="2" Text="{Binding Address}"></TextBlock>
+                                                <TextBlock Grid.Column="3" Text="{Binding City}"></TextBlock>
+                                                <TextBlock Grid.Column="4" Text="{Binding Country}"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="SearchGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Height="40">
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock Text="Wyszukaj" Margin="10,10,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                    CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <ComboBox x:Name="ItemSearchCb" ItemsSource="{Binding}" SelectedValuePath="ItemID" FontSize="14" DisplayMemberPath="ItemID" Margin="20,10,20,0" Header="ID produktu:" SelectionChanged="ItemSearchCb_SelectionChanged"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <ComboBox x:Name="ISKUCb" ItemsSource="{Binding}" SelectedValuePath="Code" DisplayMemberPath="Code" Margin="20,10,20,0" Header="Jednostka:" SelectionChanged="ISKUCb_SelectionChanged"/>
+
+                    </StackPanel>
+                    <ScrollViewer Height="auto" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,0" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" Width="auto">
+                        <StackPanel Grid.Row="2">
+                            <TextBlock x:Name="SearchListTb"  FontSize="40"/>
+
+                            <Grid Margin="10,0,0,0">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Id produktu "></TextBlock>
+                                <TextBlock Grid.Column="1" Text="Jednostka "></TextBlock>
+                                <TextBlock Grid.Column="2" Text="Magazyn "></TextBlock>
+                                <TextBlock Grid.Column="3" Text="Miejsce "></TextBlock>
+                                <TextBlock Grid.Column="4" Text="Ilość sztuk "></TextBlock>
+                            </Grid>
+                            <ListView x:Name="SearchList">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="90"/>
+                                                <ColumnDefinition Width="90"/>
+                                                <ColumnDefinition Width="90"/>
+                                                <ColumnDefinition Width="90"/>
+                                                <ColumnDefinition Width="90"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ItemID}" FontSize="14" Foreground="MediumSlateBlue"></TextBlock>
+                                            <TextBlock Grid.Column="1" Text="{Binding KeepUnit}" FontSize="14"></TextBlock>
+                                            <TextBlock Grid.Column="2" Text="{Binding WarehouseNumber}" FontSize="14"></TextBlock>
+                                            <TextBlock Grid.Column="3" Text="{Binding WarehousePlace}" FontSize="14"></TextBlock>
+                                            <TextBlock Grid.Column="4" Text="{Binding Quantity}" FontSize="14"></TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+                <Grid x:Name="InventoryGrid">
+                    <StackPanel>
+                        <StackPanel Height="40">
+                        </StackPanel>
+                        <TextBlock Text="Inwentaryzacja" Margin="10,-6.5,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+                        <StackPanel>
+                            <Button x:Name="AddInventoryHeaderButton" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                                         Width="50" Height="50" Background="Transparent" BorderBrush="Transparent" Click="AddInventoryHeaderButton_Click"/>
+                        </StackPanel>
+                        <ScrollViewer Height="350" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" Width="auto">
+                            <StackPanel Grid.Row="1" Margin="10,0,0,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="110"/>
+                                        <ColumnDefinition Width="130"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="70"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="Nr dokumentu"></TextBlock>
+                                    <TextBlock Grid.Column="1" Text="Opis"></TextBlock>
+                                    <TextBlock Grid.Column="2" Text="Data"></TextBlock>
+                                    <TextBlock Grid.Column="3" Text="Magazyn"></TextBlock>
+                                </Grid>
+
+                                <ListView x:Name="InventoryHeaderList" Tapped="InventoryHeaderList_Tapped" Margin="-10,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="110"/>
+                                                    <ColumnDefinition Width="130"/>
+                                                    <ColumnDefinition Width="100"/>
+                                                    <ColumnDefinition Width="70"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding DocumentID}" Foreground="MediumSlateBlue"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Description}"></TextBlock>
+                                                <TextBlock Grid.Column="2" Text="{Binding InventoryDate, 
+                                                    Converter={StaticResource StringFormatConverter}, 
+                                                    ConverterParameter=' {0: yyyy-MM-dd}'}" />
+                                                <TextBlock Grid.Column="3" Text="{Binding WarehouseName}"></TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+                <Grid x:Name="HistoryGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Height="40">
+                    </StackPanel>
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="Wyszukaj dokument" Margin="10,10,0,10" Style="{ThemeResource HeaderTextBlockStyle}"
+                        CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+
+                        <TextBox Name="HistoryTb" Width="150" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBox>
+                        <Button x:Name="SearchHistoryButton" Content="Szukaj" HorizontalAlignment="Center" Height="50" Margin="200,-40,20,0" Width="90" Click="SearchHistoryButton_Click"/>
+                    </StackPanel>
+                    <ScrollViewer Height="350" Grid.Row="1" Margin="0,20,0,0" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" Width="auto">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="130"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Nr dokumentu"></TextBlock>
+                                <TextBlock Grid.Column="1" Text="Nr zapasu"></TextBlock>
+                                <TextBlock Grid.Column="2" Text="j.m"></TextBlock>
+                                <TextBlock Grid.Column="3" Text="Ilość"></TextBlock>
+                                <TextBlock Grid.Column="4" Text="Magazyn"></TextBlock>
+                                <TextBlock Grid.Column="5" Text="Miejsce"></TextBlock>
+                                <TextBlock Grid.Column="6" Text="Opis"></TextBlock>
+                                <TextBlock Grid.Column="7" Text="Data dokumentu"></TextBlock>
+                            </Grid>
+                            <ListView x:Name="HistoryList" Margin="-740,20,0,0">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Grid.Row="0" Height="20">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="100"/>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="70"/>
+                                                <ColumnDefinition Width="70"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="90"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding DocumentNumber}" FontSize="14" Foreground="MediumSlateBlue"></TextBlock>
+                                            <TextBlock Grid.Column="1" Text="{Binding ItemID}"></TextBlock>
+                                            <TextBlock Grid.Column="2" Text="{Binding KeepUnit}" HorizontalAlignment="Left"></TextBlock>
+                                            <TextBlock Grid.Column="3" Text="{Binding Quantity}"></TextBlock>
+                                            <TextBlock Grid.Column="4" Text="{Binding WarehouseNumber}"></TextBlock>
+                                            <TextBlock Grid.Column="5" Text="{Binding WarehousePlace}"></TextBlock>
+                                            <TextBlock Grid.Column="6" Text="{Binding DocumentDescription}" HorizontalAlignment="Left"></TextBlock>
+                                            <TextBlock Grid.Column="7" Text="{Binding DocumentDate, 
+                                                     Converter={StaticResource StringFormatConverter}, 
+                                                     ConverterParameter=' {0: yyyy-MM-dd}'}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
+            </StackPanel>
+        </SplitView.Content>
+    </SplitView>
+</Page>
