@@ -20,7 +20,7 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Left">
             <TextBlock Text ="Produkt" Margin="20,20,162,0" Style="{ThemeResource HeaderTextBlockStyle}"
                         CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
             <Button x:Name="DeleteEditButton" Content="Usuń" 
@@ -28,9 +28,8 @@
             <TextBlock x:Name="ItemIDTb" Margin="20,00,20,0" Style="{ThemeResource HeaderTextBlockStyle}"
                         CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
 
-
-            <TextBox x:Name="NameTb" Margin="20,10,20,0" Header="Nazwa:"/>
-            <TextBox x:Name="DescriptionTb" Margin="20,10,20,0" Header="Opis:"/>
+            <TextBox x:Name="NameTb" Margin="20,10,20,0" Header="Nazwa:" TextAlignment="Left" MaxWidth="500"/>
+            <TextBox x:Name="DescriptionTb" Margin="20,10,20,0" Header="Opis" TextAlignment="Left" MaxWidth="500"/>
             <ComboBox x:Name="CategorySelectCb" ItemsSource="{Binding}" SelectedValuePath="CategoryID" DisplayMemberPath="CategoryID" Margin="20,10,20,0" Header="Kategoria:"/>
 
             <Button x:Name="SKUEditButton" Content="Jednostki miary" 
